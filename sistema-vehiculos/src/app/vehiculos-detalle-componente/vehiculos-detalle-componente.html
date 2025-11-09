@@ -1,0 +1,11 @@
+<div *ngIf="vehiculo; else noHay">
+  <h3>Detalle del vehículo</h3>
+  <p><strong>Marca/Modelo: </strong>{{ vehiculo.marca }} {{ vehiculo.modelo }}</p>
+  <p><strong>Tipo: </strong>{{ vehiculo.tipo }}</p>
+  <p><strong>Color: </strong>{{ vehiculo.color }}</p>
+  <p><strong>Precio: </strong>${{ vehiculo.precio }}</p>
+</div>
+
+<ng-template #noHay>
+  <p>No se encontró el vehículo.</p>
+</ng-template>

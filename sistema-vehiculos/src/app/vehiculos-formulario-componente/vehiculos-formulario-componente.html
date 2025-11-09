@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header">{{ modoEdicion ? 'Editar Vehículo' : 'Agregar Vehículo' }}</div>
+  <div class="card-body">
+    <form #vehForm="ngForm" (ngSubmit)="guardarVehiculo()">
+      <div class="form-group">
+        <label>Tipo *</label>
+        <input name="tipo" class="form-control" [(ngModel)]="modeloVehiculo.tipo" required />
+      </div>
+
+      <div class="form-group">
+        <label>Marca *</label>
+        <input name="marca" class="form-control" [(ngModel)]="modeloVehiculo.marca" required />
+      </div>
+
+      <div class="form-group">
+        <label>Modelo *</label>
+        <input name="modelo" class="form-control" [(ngModel)]="modeloVehiculo.modelo" required />
+      </div>
+
+      <div class="form-group">
+        <label>Color</label>
+        <input name="color" class="form-control" [(ngModel)]="modeloVehiculo.color" />
+      </div>
+
+      <div class="form-group">
+        <label>Precio</label>
+        <input type="number" name="precio" class="form-control" [(ngModel)]="modeloVehiculo.precio" />
+      </div>
+
+      <div class="mt-2">
+        <button class="btn btn-primary" type="submit">{{ modoEdicion ? 'Actualizar' : 'Agregar' }}</button>
+        <button class="btn btn-secondary ml-2" type="button" (click)="limpiarFormulario()">Limpiar</button>
+      </div>
+    </form>
+  </div>
+</div>
