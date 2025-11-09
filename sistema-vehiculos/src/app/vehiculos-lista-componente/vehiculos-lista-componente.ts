@@ -24,7 +24,6 @@ export class VehiculosListaComponenteComponent implements OnInit, OnDestroy {
     // Suscribir a los cambios de la lista en el servicio
     this.sub = this.vehiculosService.getVehiculosObservable().subscribe((arr: Vehiculo[]) => {
       this.lista = arr;
-      console.log('Lista actualizada (lista comp):', this.lista);
     });
 
     // Asegurar valor inicial (por si ya estaba cargado)

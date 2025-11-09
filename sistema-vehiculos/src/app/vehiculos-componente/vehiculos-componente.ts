@@ -19,26 +19,10 @@ export class VehiculosComponenteComponent implements OnInit {
 
   ngOnInit(): void {
     this.vehiculosService.cargarDesdeFirebase().subscribe((res: any) => {
-      console.log('Respuesta raw de Firebase:', res);
-
-      let arr: any[] = [];
-      if (res == null) {
-        arr = [];
-      } else if (Array.isArray(res)) {
-        arr = res;
-      } else if (typeof res === 'object') {
-        arr = Object.values(res);
-      } else {
-        arr = [];
-      }
-      
-      arr = arr.filter(item => item != null);
-
-      this.vehiculosService.setVehiculos(arr);
+      this.vehiculosService.setVehiculos(res);
       this.refrescarLista();
-      console.log('Lista normalizada:', arr);
     }, err => {
-      console.error('Error cargando vehiculos', err);
+      console.error('Error al cargar desde Firebase', err);
       this.vehiculosService.setVehiculos([]);
       this.refrescarLista();
     });
