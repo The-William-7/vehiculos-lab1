@@ -1,36 +1,37 @@
-<div class="card">
-  <div class="card-header">{{ modoEdicion ? 'Editar Vehículo' : 'Agregar Vehículo' }}</div>
-  <div class="card-body">
-    <form #vehForm="ngForm" (ngSubmit)="guardarVehiculo()">
-      <div class="form-group">
-        <label>Tipo *</label>
-        <input name="tipo" class="form-control" [(ngModel)]="modeloVehiculo.tipo" required />
-      </div>
-
-      <div class="form-group">
-        <label>Marca</label>
-        <input name="marca" class="form-control" [(ngModel)]="modeloVehiculo.marca" required />
-      </div>
-
-      <div class="form-group">
-        <label>Modelo</label>
-        <input name="modelo" class="form-control" [(ngModel)]="modeloVehiculo.modelo" required />
-      </div>
-
-      <div class="form-group">
-        <label>Color</label>
-        <input name="color" class="form-control" [(ngModel)]="modeloVehiculo.color" />
-      </div>
-
-      <div class="form-group">
-        <label>Precio</label>
-        <input type="number" name="precio" class="form-control" [(ngModel)]="modeloVehiculo.precio" />
-      </div>
-
-      <div class="mt-2">
-        <button class="btn btn-primary" type="submit">{{ modoEdicion ? 'Actualizar' : 'Agregar' }}</button>
-        <button class="btn btn-secondary ml-2" type="button" (click)="limpiarFormulario()">Limpiar</button>
-      </div>
-    </form>
+<form #vehForm="ngForm" (ngSubmit)="guardarVehiculo()" novalidate>
+  <div class="mb-2">
+    <label for="tipo" class="form-label">Tipo</label>
+    <input id="tipo" name="tipo" class="form-control" required [(ngModel)]="modeloVehiculo.tipo" />
   </div>
-</div>
+
+  <div class="mb-2">
+    <label for="marca" class="form-label">Marca</label>
+    <input id="marca" name="marca" class="form-control" required [(ngModel)]="modeloVehiculo.marca" />
+  </div>
+
+  <div class="mb-2">
+    <label for="modelo" class="form-label">Modelo</label>
+    <input id="modelo" name="modelo" class="form-control" required [(ngModel)]="modeloVehiculo.modelo" />
+  </div>
+
+  <div class="mb-2">
+    <label for="color" class="form-label">Color</label>
+    <input id="color" name="color" class="form-control" [(ngModel)]="modeloVehiculo.color" />
+  </div>
+
+  <div class="mb-3">
+    <label for="precio" class="form-label">Precio</label>
+    <input id="precio" name="precio" class="form-control" type="number" [(ngModel)]="modeloVehiculo.precio" />
+  </div>
+
+  <div class="d-flex gap-2">
+    <button class="btn btn-primary" type="submit" [disabled]="loading">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+      {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
+    </button>
+
+    <button class="btn btn-secondary" type="button" (click)="limpiarFormulario()" [disabled]="loading">
+      Limpiar
+    </button>
+  </div>
+</form>
