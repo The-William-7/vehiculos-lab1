@@ -18,17 +18,17 @@ export class VehiculosComponenteComponent implements OnInit {
   constructor(private vehiculosService: VehiculosService) {}
 
   ngOnInit(): void {
-    this.vehiculosService.cargarDesdeFirebase().subscribe((res: any) => {
+    this.vehiculosService.cargarFirebase().subscribe((res: any) => {
       this.vehiculosService.setVehiculos(res);
-      this.refrescarLista();
+      this.actualizarLista();
     }, err => {
-      console.error('Error al cargar desde Firebase', err);
+      console.error('Error al cargar Firebase', err);
       this.vehiculosService.setVehiculos([]);
-      this.refrescarLista();
+      this.actualizarLista();
     });
   }
 
-  refrescarLista() {
+  actualizarLista() {
     this.listaVehiculos = this.vehiculosService.obtenerVehiculos();
   }
 }

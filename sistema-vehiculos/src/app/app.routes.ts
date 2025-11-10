@@ -6,9 +6,9 @@ import { VehiculosFormularioComponenteComponent } from './vehiculos-formulario-c
 import { VehiculosDetalleComponenteComponent } from './vehiculos-detalle-componente/vehiculos-detalle-componente';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'vehiculos', pathMatch: 'full' },
+  { path: '', component: VehiculosComponenteComponent },
   { path: 'vehiculos', component: VehiculosComponenteComponent },
   { path: 'vehiculos/lista', component: VehiculosListaComponenteComponent },
-  { path: 'vehiculos/nuevo', component: VehiculosFormularioComponenteComponent },
+  { path: 'vehiculos/formulario', component: VehiculosFormularioComponenteComponent },
   { path: 'vehiculos/:id', component: VehiculosDetalleComponenteComponent },
 ];

@@ -18,13 +18,6 @@ export class ServicioMensajeService {
   }
 
   confirmar(titulo: string, texto: string) {
-    return Swal.fire({
-      title: titulo,
-      text: texto,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    });
+    return Swal.fire({title: titulo, text: texto, icon: 'warning', showCancelButton: true, confirmButtonText: 'Sí', cancelButtonText: 'No'});
   }
 }

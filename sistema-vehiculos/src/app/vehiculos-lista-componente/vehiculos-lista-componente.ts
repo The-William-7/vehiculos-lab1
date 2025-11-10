@@ -1,4 +1,3 @@
-// src/app/vehiculos-lista-componente/vehiculos-lista-componente.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,17 +20,14 @@ export class VehiculosListaComponenteComponent implements OnInit, OnDestroy {
   constructor(private vehiculosService: VehiculosService, private mensaje: ServicioMensajeService) {}
 
   ngOnInit(): void {
-    // Suscribir a los cambios de la lista en el servicio
-    this.sub = this.vehiculosService.getVehiculosObservable().subscribe((arr: Vehiculo[]) => {
+    this.sub = this.vehiculosService.getVehiculos().subscribe((arr: Vehiculo[]) => {
       this.lista = arr;
     });
-
-    // Asegurar valor inicial (por si ya estaba cargado)
     this.lista = this.vehiculosService.obtenerVehiculos();
   }
 
   editar(indice: number) {
-    this.vehiculosService.setEditingIndex(indice);
+    this.vehiculosService.setEditarIndex(indice);
   }
 
   eliminar(indice: number) {

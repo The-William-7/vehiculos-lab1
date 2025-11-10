@@ -22,7 +22,7 @@ export class VehiculosDetalleComponenteComponent implements OnInit {
       const id = params['id'];
       const idx = parseInt(id, 10);
       this.indice = isNaN(idx) ? -1 : idx;
-      this.vehiculo = this.vehiculosService.getVehiculoByIndex(this.indice);
+      this.vehiculo = this.vehiculosService.getVehiculosIndex(this.indice);
     });
   }
 }

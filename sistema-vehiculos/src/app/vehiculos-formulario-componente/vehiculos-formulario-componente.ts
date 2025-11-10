@@ -17,8 +17,8 @@ export class VehiculosFormularioComponenteComponent implements OnInit, OnDestroy
   @ViewChild('vehForm') vehForm!: NgForm;
 
   modeloVehiculo: Vehiculo = new Vehiculo();
-  modoEdicion = false;
-  indiceEdicion = -1;
+  Editar = false;
+  indiceEditar = -1;
 
   loading = false;
 
@@ -30,16 +30,14 @@ export class VehiculosFormularioComponenteComponent implements OnInit, OnDestroy
   ) {}
 
   ngOnInit(): void {
-    // Escuchar índice de edición
-    this.sub = this.vehiculosService.getEditingIndexObservable().subscribe((i: number) => {
+    this.sub = this.vehiculosService.getEditar().subscribe((i: number) => {
       if (i >= 0) {
-        const v = this.vehiculosService.getVehiculoByIndex(i);
+        const v = this.vehiculosService.getVehiculosIndex(i);
         if (v) {
           this.modeloVehiculo = v;
-          this.modoEdicion = true;
-          this.indiceEdicion = i;
+          this.Editar = true;
+          this.indiceEditar = i;
         } else {
-          // índice inválido: limpiar
           this.limpiarFormulario();
         }
       } else {
@@ -49,51 +47,24 @@ export class VehiculosFormularioComponenteComponent implements OnInit, OnDestroy
   }
 
   guardarVehiculo() {
-    // Validación (SweetAlert en lugar de this.mensaje.mostrar)
     if (!this.modeloVehiculo.tipo || !this.modeloVehiculo.marca || !this.modeloVehiculo.modelo) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Campos incompletos',
-        text: 'Complete Tipo, Marca y Modelo (mínimo).',
-        confirmButtonText: 'Entendido',
-        timer: 2000
-      });
+      Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Complete Tipo, Marca y Modelo (mínimo).', confirmButtonText: 'Entendido', timer: 2000});
       return;
     }
 
     this.loading = true;
 
-    if (this.modoEdicion) {
-      // Llamada al service (manteniendo tu lógica actual)
-      this.vehiculosService.actualizarVehiculo(this.indiceEdicion, this.modeloVehiculo);
-
-      // Toast pequeño de éxito (no bloqueante)
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        icon: 'success',
-        title: 'Vehículo actualizado',
-        showConfirmButton: false,
-        timer: 1200
-      });
+    if (this.Editar) {
+      this.vehiculosService.actualizarVehiculo(this.indiceEditar, this.modeloVehiculo);
+      Swal.fire({toast: true, position: 'top-end', icon: 'success', title: 'Vehículo actualizado', showConfirmButton: false, timer: 1200 });
 
     } else {
-      // Agregar con tu servicio actual
       this.vehiculosService.agregarVehiculo(this.modeloVehiculo);
-
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        icon: 'success',
-        title: 'Vehículo agregado',
-        showConfirmButton: false,
-        timer: 1200
-      });
+      Swal.fire({toast: true, position: 'top-end', icon: 'success', title: 'Vehículo agregado', showConfirmButton: false, timer: 1200});
     }
 
-    // Esperar al toast (1.2s) y recargar desde Firebase; normalizar resultado
     setTimeout(() => {
-      this.vehiculosService.cargarDesdeFirebase().subscribe({
+      this.vehiculosService.cargarFirebase().subscribe({
         next: (res: any) => {
           let arr: any[] = [];
           if (res == null) {
@@ -108,17 +79,15 @@ export class VehiculosFormularioComponenteComponent implements OnInit, OnDestroy
           arr = arr.filter((it: any) => it != null);
 
           this.vehiculosService.setVehiculos(arr);
-
-          // limpiar estado visual
           this.limpiarFormulario();
-          this.vehiculosService.setEditingIndex(-1);
+          this.vehiculosService.setEditarIndex(-1);
           this.loading = false;
         },
         error: (err) => {
           console.error('Error recargando desde Firebase:', err);
           this.mensaje.error('No se pudo actualizar la lista. Intente de nuevo.');
           this.limpiarFormulario();
-          this.vehiculosService.setEditingIndex(-1);
+          this.vehiculosService.setEditarIndex(-1);
           this.loading = false;
         }
       });
@@ -128,8 +97,8 @@ export class VehiculosFormularioComponenteComponent implements OnInit, OnDestroy
   limpiarFormulario() {
     if (this.vehForm) this.vehForm.resetForm();
     this.modeloVehiculo = new Vehiculo();
-    this.modoEdicion = false;
-    this.indiceEdicion = -1;
+    this.Editar = false;
+    this.indiceEditar = -1;
   }
 
   ngOnDestroy(): void {
