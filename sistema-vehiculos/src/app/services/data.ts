@@ -7,12 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  // Tu URL de Realtime Database (sin /datos.json)
   private urlBase = 'https://sistema-vehiculos-5f8ed-default-rtdb.firebaseio.com';
 
   constructor(private http: HttpClient) {}
 
-  // sobrescribe /datos.json con el array completo
   guardarVehiculos(vehiculos: Vehiculo[]): Observable<any> {
     return this.http.put(`${this.urlBase}/datos.json`, vehiculos);
   }
@@ -21,7 +19,6 @@ export class DataService {
     return this.http.get<Vehiculo[] | null>(`${this.urlBase}/datos.json`);
   }
 
-  // opcional: actualizar un índice
   actualizarVehiculo(indice: number, vehiculo: Vehiculo): Observable<any> {
     return this.http.put(`${this.urlBase}/datos/${indice}.json`, vehiculo);
   }

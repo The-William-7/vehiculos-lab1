@@ -1,4 +1,3 @@
-// src/app/vehiculo.model.ts
 export class Vehiculo {
   tipo: string;
   marca: string;
