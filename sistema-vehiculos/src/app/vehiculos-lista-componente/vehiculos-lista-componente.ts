@@ -8,7 +8,6 @@ import { Vehiculo } from '../vehiculo.model';
 
 @Component({
   selector: 'app-vehiculos-lista-componente',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './vehiculos-lista-componente.html',
   styleUrls: ['./vehiculos-lista-componente.css']
